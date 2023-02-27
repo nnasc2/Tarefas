@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class TorreDeHanoiComPilhasERecursao {
+public class TorreDeHanoiComPilhasERecursaoEMinimoDeJogadas {
     public static void main(String[] args) {
         int numDiscos = 5;
         Stack<Integer> origem = new Stack<>();
@@ -11,22 +11,26 @@ public class TorreDeHanoiComPilhasERecursao {
             origem.push(i);
         }
 
-        moverDiscos(numDiscos, origem, destino, auxiliar);
+        int numJogadas = moverDiscos(numDiscos, origem, destino, auxiliar);
+        System.out.println("Número mínimo de jogadas: " + numJogadas);
     }
 
-    public static void moverDiscos(int n, Stack<Integer> origem, Stack<Integer> destino, Stack<Integer> auxiliar) {
+    public static int moverDiscos(int n, Stack<Integer> origem, Stack<Integer> destino, Stack<Integer> auxiliar) {
         if (n == 1) {
             int disco = origem.pop();
             destino.push(disco);
             System.out.println("Mover disco " + disco + " de " + origem + " para " + destino);
+            return 1;
         } else {
-            moverDiscos(n - 1, origem, auxiliar, destino);
+            int numJogadas1 = moverDiscos(n - 1, origem, auxiliar, destino);
 
             int disco = origem.pop();
             destino.push(disco);
             System.out.println("Mover disco " + disco + " de " + origem + " para " + destino);
 
-            moverDiscos(n - 1, auxiliar, destino, origem);
+            int numJogadas2 = moverDiscos(n - 1, auxiliar, destino, origem);
+
+            return numJogadas1 + numJogadas2 + 1;
         }
     }
 }
